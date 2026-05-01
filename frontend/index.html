@@ -1,0 +1,141 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Lista de Tareas</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>📝 Mi Lista de Tareas</h1>
+                <p class="subtitle">Organiza tu día de manera fácil</p>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Sección de entrada de nueva tarea -->
+            <section class="input-section">
+                <form id="taskForm" class="task-form">
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="taskTitle" 
+                            class="input-title" 
+                            placeholder="¿Qué necesitas hacer hoy?"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <textarea 
+                                id="taskDescription" 
+                                class="input-description" 
+                                placeholder="Añade más detalles (opcional)"
+                                maxlength="500"
+                            ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <select id="taskPriority" class="input-priority">
+                                <option value="2">Prioridad Media</option>
+                                <option value="1">Prioridad Baja</option>
+                                <option value="3">Prioridad Alta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-icon">➕</span> Añadir Tarea
+                    </button>
+                </form>
+            </section>
+
+            <!-- Filtros -->
+            <section class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    Todas (0)
+                </button>
+                <button class="filter-btn" data-filter="active">
+                    Activas (0)
+                </button>
+                <button class="filter-btn" data-filter="completed">
+                    Completadas (0)
+                </button>
+            </section>
+
+            <!-- Mensaje de carga -->
+            <div id="loadingMessage" class="loading-message">
+                Cargando tareas...
+            </div>
+
+            <!-- Mensaje de lista vacía -->
+            <div id="emptyMessage" class="empty-message hidden">
+                <div class="empty-icon">📭</div>
+                <p>No hay tareas que mostrar</p>
+            </div>
+
+            <!-- Lista de tareas -->
+            <section class="tasks-section">
+                <ul id="tasksList" class="tasks-list">
+                    <!-- Las tareas se renderizarán aquí -->
+                </ul>
+            </section>
+        </main>
+
+        <footer class="footer">
+            
+        </footer>
+    </div>
+
+    <!-- Modal para editar tarea -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Tarea</h2>
+                <button type="button" class="modal-close">&times;</button>
+            </div>
+            <form id="editForm" class="task-form">
+                <div class="form-group">
+                    <label for="editTitle">Título</label>
+                    <input 
+                        type="text" 
+                        id="editTitle" 
+                        class="input-title" 
+                        maxlength="255"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Descripción</label>
+                    <textarea 
+                        id="editDescription" 
+                        class="input-description" 
+                        maxlength="500"
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editPriority">Prioridad</label>
+                    <select id="editPriority" class="input-priority">
+                        <option value="1">Baja</option>
+                        <option value="2">Media</option>
+                        <option value="3">Alta</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
